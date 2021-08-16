@@ -1,7 +1,7 @@
 // Handler to handle user related routes
 
 // dependencies
-const { hash } = require("../../helpers/utilities");
+const { parseJson, hash } = require("../../helpers/utilities");
 const lib = require("../../lib/data");
 //module scaffolding
 const handler = {};
@@ -77,10 +77,34 @@ handler._user.post = (requestProperties, callback) => {
       });
    }
 };
+
 handler._user.get = (requestProperties, callback) => {
-   callback(200);
+   const phone =
+      typeof requestProperties.queryStringObject.phone === "string" &&
+      requestProperties.queryStringObject.phone.trim().length === 11
+         ? requestProperties.queryStringObject.phone
+         : null;
+   if (phone) {
+      lib.read("users", phone, (err, data) => {
+         const user = { ...parseJson(data) };
+         if (!err && user) {
+            delete user.password;
+            callback(200, user);
+         } else {
+            callback(404, {
+               error: "User Not Found!",
+            });
+         }
+      });
+   } else {
+      callback(404, {
+         error: "User Not Found!",
+      });
+   }
 };
+
 handler._user.put = (requestProperties, callback) => {};
+
 handler._user.delete = (requestProperties, callback) => {};
 
 module.exports = handler;
