@@ -7,18 +7,21 @@ environments.development = {
    port: 3000,
    envName: "development",
    secretKey: "qwertyuiop",
+   maxChecks: 5,
 };
 
 environments.staging = {
    port: 4000,
    envName: "staging",
    secretKey: "asdfghjkl",
+   maxChecks: 5,
 };
 
 environments.production = {
    port: 5000,
    envName: "production",
    secretKey: "zxcvbnm",
+   maxChecks: 5,
 };
 
 // choosing the environment

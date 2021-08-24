@@ -15,7 +15,7 @@ utilities.parseJson = (jsonString) => {
       output = JSON.parse(jsonString);
    } catch (error) {
       output = {};
-      console.log("Error parsing json");
+      // console.log("Error parsing json");
    }
 
    return output;
